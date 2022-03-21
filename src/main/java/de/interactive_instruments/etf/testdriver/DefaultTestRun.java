@@ -19,16 +19,6 @@
  */
 package de.interactive_instruments.etf.testdriver;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-
-import org.slf4j.LoggerFactory;
-
 import de.interactive_instruments.IFile;
 import de.interactive_instruments.LogUtils;
 import de.interactive_instruments.TimeUtils;
@@ -38,6 +28,15 @@ import de.interactive_instruments.exceptions.ExcUtils;
 import de.interactive_instruments.exceptions.InitializationException;
 import de.interactive_instruments.exceptions.InvalidStateTransitionException;
 import de.interactive_instruments.exceptions.config.ConfigurationException;
+import org.slf4j.LoggerFactory;
+
+import java.time.Duration;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * @author Jon Herrmann ( herrmann aT interactive-instruments doT de )
@@ -257,14 +256,12 @@ final class DefaultTestRun implements TestRun {
 
 	@Override
 	public final void cancel() throws InvalidStateTransitionException {
-		if (this.getState() == STATE.CANCELING || this.getState() == STATE.CANCELED) {
-			testRunLogger.info("Canceling TestRun." + getId());
-			fireCanceling();
-			doCancel();
-			fireCanceled();
-			release();
-			testRunLogger.info("TestRun." + getId() + " canceled");
-		}
+        testRunLogger.info("Canceling TestRun." + getId());
+        fireCanceling();
+        doCancel();
+        fireCanceled();
+        release();
+        testRunLogger.info("TestRun." + getId() + " canceled");
 	}
 
 	protected final void handleException(final Throwable e) {
